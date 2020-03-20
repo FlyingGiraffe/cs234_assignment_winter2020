@@ -1,0 +1,39 @@
+2020-03-18 23:10:04,778:WARNING: From q3_nature.py:59: conv2d (from tensorflow.python.layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.conv2d instead.
+2020-03-18 23:10:04,783:WARNING: From /home/dcy/anaconda3/lib/python3.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+2020-03-18 23:10:04,807:WARNING: From q3_nature.py:62: flatten (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.flatten instead.
+2020-03-18 23:10:04,811:WARNING: From q3_nature.py:63: dense (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.dense instead.
+2020-03-18 23:10:04,888:WARNING: From /home/dcy/anaconda3/lib/python3.7/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+2020-03-18 23:10:06,018:INFO: Evaluating...
+2020-03-18 23:10:06,882:INFO: Average reward: -0.30 +/- 0.00
+2020-03-18 23:10:07,362:INFO: Evaluating...
+2020-03-18 23:10:07,509:INFO: Average reward: 1.00 +/- 0.00
+2020-03-18 23:10:07,941:INFO: Evaluating...
+2020-03-18 23:10:08,083:INFO: Average reward: 2.30 +/- 0.00
+2020-03-18 23:10:08,526:INFO: Evaluating...
+2020-03-18 23:10:08,680:INFO: Average reward: 0.50 +/- 0.00
+2020-03-18 23:10:09,137:INFO: Evaluating...
+2020-03-18 23:10:09,291:INFO: Average reward: 4.00 +/- 0.00
+2020-03-18 23:10:09,733:INFO: Evaluating...
+2020-03-18 23:10:09,891:INFO: Average reward: 4.10 +/- 0.00
+2020-03-18 23:10:10,340:INFO: Evaluating...
+2020-03-18 23:10:10,495:INFO: Average reward: 4.10 +/- 0.00
+2020-03-18 23:10:10,947:INFO: Evaluating...
+2020-03-18 23:10:11,106:INFO: Average reward: 4.10 +/- 0.00
+2020-03-18 23:10:11,575:INFO: Evaluating...
+2020-03-18 23:10:11,718:INFO: Average reward: 4.10 +/- 0.00
+2020-03-18 23:10:11,974:INFO: - Training done.
+2020-03-18 23:10:12,081:INFO: Evaluating...
+2020-03-18 23:10:12,220:INFO: Average reward: 4.10 +/- 0.00
+2020-03-18 23:10:12,251:DEBUG: update_title_pos
+2020-03-18 23:10:12,261:DEBUG: findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('/home/dcy/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
+2020-03-18 23:10:12,290:DEBUG: update_title_pos

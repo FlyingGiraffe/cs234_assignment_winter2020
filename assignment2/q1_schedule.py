@@ -11,7 +11,7 @@ class LinearSchedule(object):
             nsteps: number of steps between the two values of eps
         """
         self.epsilon        = eps_begin
-        self.eps_begin      = eps_begin
+        self.eps_begin       = eps_begin
         self.eps_end        = eps_end
         self.nsteps         = nsteps
 
@@ -34,7 +34,10 @@ class LinearSchedule(object):
         ##############################################################
         ################ YOUR CODE HERE - 3-4 lines ################## 
 
-        pass
+        if 0 <= t and t <= self.nsteps:
+            self.epsilon = self.eps_begin * (1 - t / self.nsteps) + self.eps_end * (t / self.nsteps)
+        elif t > self.nsteps:
+            self.epsilon = self.eps_end
 
         ##############################################################
         ######################## END YOUR CODE ############## ########
@@ -79,7 +82,10 @@ class LinearExploration(LinearSchedule):
         ##############################################################
         ################ YOUR CODE HERE - 4-5 lines ##################
 
-        pass
+        if np.random.random() < self.epsilon:
+            return self.env.action_space.sample()
+        else:
+            return best_action
 
         ##############################################################
         ######################## END YOUR CODE #######################

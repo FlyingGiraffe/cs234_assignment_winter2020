@@ -50,7 +50,13 @@ class Linear(DQN):
         ##############################################################
         ################YOUR CODE HERE (6-15 lines) ##################
 
-        pass
+        img_height, img_width, nchannels = state_shape
+        self.s = tf.placeholder(tf.uint8, shape=(None, img_height, img_width, nchannels * config.state_history))
+        self.a = tf.placeholder(tf.int32, shape=(None))
+        self.r = tf.placeholder(tf.float32, shape=(None))
+        self.sp = tf.placeholder(tf.uint8, shape=(None, img_height, img_width, nchannels * config.state_history))
+        self.done_mask = tf.placeholder(tf.bool, shape=(None))
+        self.lr = tf.placeholder(tf.float32)
 
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -88,7 +94,9 @@ class Linear(DQN):
         ##############################################################
         ################ YOUR CODE HERE - 2-3 lines ################## 
         
-        pass
+        with tf.variable_scope(scope, reuse=reuse):
+            flatten = tf.layers.flatten(state)
+            out = tf.layers.dense(flatten, num_actions)
 
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -132,7 +140,10 @@ class Linear(DQN):
         ##############################################################
         ################### YOUR CODE HERE - 5-10 lines #############
         
-        pass
+        q_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=q_scope)
+        target_q_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=target_q_scope)
+        update_ops = [tf.assign(target_q_vars[i], q_vars[i]) for i in range(len(q_vars))]
+        self.update_target_op = tf.group(*update_ops)
 
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -171,7 +182,10 @@ class Linear(DQN):
         ##############################################################
         ##################### YOUR CODE HERE - 4-5 lines #############
 
-        pass
+        q_samp = self.r + tf.multiply(1 - tf.cast(self.done_mask, tf.float32), self.config.gamma * tf.reduce_max(target_q, axis=1))
+        cur_actions = tf.one_hot(self.a, num_actions)
+        q = tf.reduce_sum(tf.multiply(cur_actions, q), axis=1)
+        self.loss = tf.reduce_mean(tf.squared_difference(q_samp, q))
 
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -210,7 +224,14 @@ class Linear(DQN):
         ##############################################################
         #################### YOUR CODE HERE - 8-12 lines #############
 
-        pass
+        optimizer = tf.train.AdamOptimizer(self.lr)
+        scope_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope)
+        grads_and_vars = optimizer.compute_gradients(self.loss, var_list=scope_vars)
+        gradients, variables = zip(*grads_and_vars)
+        if self.config.grad_clip:
+            gradients = [tf.clip_by_norm(grad, self.config.clip_val) for grad in gradients]
+        self.train_op = optimizer.apply_gradients(zip(gradients, variables))
+        self.grad_norm = tf.global_norm(gradients)
         
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -221,12 +242,10 @@ if __name__ == '__main__':
     env = EnvTest((5, 5, 1))
 
     # exploration strategy
-    exp_schedule = LinearExploration(env, config.eps_begin, 
-            config.eps_end, config.eps_nsteps)
+    exp_schedule = LinearExploration(env, config.eps_begin, config.eps_end, config.eps_nsteps)
 
     # learning rate schedule
-    lr_schedule  = LinearSchedule(config.lr_begin, config.lr_end,
-            config.lr_nsteps)
+    lr_schedule = LinearSchedule(config.lr_begin, config.lr_end, config.lr_nsteps)
 
     # train model
     model = Linear(env, config)

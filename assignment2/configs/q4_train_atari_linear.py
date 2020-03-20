@@ -18,10 +18,10 @@ class config():
     num_episodes_test = 50
     grad_clip         = True
     clip_val          = 10
-    saving_freq       = 250000
+    saving_freq       = 100000
     log_freq          = 50
-    eval_freq         = 250000
-    record_freq       = 250000
+    eval_freq         = 100000
+    record_freq       = 100000
     soft_epsilon      = 0.05
 
     # nature paper hyper params

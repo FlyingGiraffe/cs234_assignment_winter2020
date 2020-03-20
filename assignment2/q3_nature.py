@@ -55,7 +55,22 @@ class NatureQN(Linear):
         ##############################################################
         ################ YOUR CODE HERE - 10-15 lines ################ 
 
-        pass
+        '''
+        with tf.variable_scope(scope, reuse=reuse):
+            conv1 = tf.layers.conv2d(state, 32, 8, strides=4, activation=tf.nn.relu)
+            conv2 = tf.layers.conv2d(conv1, 64, 4, strides=2, activation=tf.nn.relu)
+            conv3 = tf.layers.conv2d(conv2, 64, 3, strides=1, activation=tf.nn.relu)
+            flatten = tf.layers.flatten(conv3)
+            fc = tf.layers.dense(flatten, 512, activation=tf.nn.relu)
+            out = tf.layers.dense(fc, num_actions)
+        '''
+        with tf.variable_scope(scope, reuse=reuse) as _:
+            X = layers.conv2d(state, 32, 8, stride=4, )
+            X = layers.conv2d(X, 64, 4, stride=2, )
+            X = layers.conv2d(X, 64, 3, stride=1, )
+            X = layers.flatten(X)
+            X = layers.fully_connected(X, 512)
+            out = layers.fully_connected(X, num_actions, activation_fn=None)
 
         ##############################################################
         ######################## END YOUR CODE #######################
@@ -69,12 +84,10 @@ if __name__ == '__main__':
     env = EnvTest((80, 80, 1))
 
     # exploration strategy
-    exp_schedule = LinearExploration(env, config.eps_begin, 
-            config.eps_end, config.eps_nsteps)
+    exp_schedule = LinearExploration(env, config.eps_begin, config.eps_end, config.eps_nsteps)
 
     # learning rate schedule
-    lr_schedule  = LinearSchedule(config.lr_begin, config.lr_end,
-            config.lr_nsteps)
+    lr_schedule  = LinearSchedule(config.lr_begin, config.lr_end, config.lr_nsteps)
 
     # train model
     model = NatureQN(env, config)
