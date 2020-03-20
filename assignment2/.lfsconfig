@@ -1,0 +1,2 @@
+[lfs]
+	keepalive = 1000
