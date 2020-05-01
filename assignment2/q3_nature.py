@@ -64,13 +64,13 @@ class NatureQN(Linear):
             fc = tf.layers.dense(flatten, 512, activation=tf.nn.relu)
             out = tf.layers.dense(fc, num_actions)
         '''
-        with tf.variable_scope(scope, reuse=reuse) as _:
-            X = layers.conv2d(state, 32, 8, stride=4, )
-            X = layers.conv2d(X, 64, 4, stride=2, )
-            X = layers.conv2d(X, 64, 3, stride=1, )
-            X = layers.flatten(X)
-            X = layers.fully_connected(X, 512)
-            out = layers.fully_connected(X, num_actions, activation_fn=None)
+        with tf.variable_scope(scope, reuse=reuse):
+            conv1 = layers.conv2d(state, 32, 8, stride=4)
+            conv2 = layers.conv2d(conv1, 64, 4, stride=2)
+            conv3 = layers.conv2d(conv2, 64, 3, stride=1)
+            flatten = layers.flatten(conv3)
+            fc = layers.fully_connected(flatten, 512)
+            out = layers.fully_connected(fc, num_actions, activation_fn=None)
 
         ##############################################################
         ######################## END YOUR CODE #######################
